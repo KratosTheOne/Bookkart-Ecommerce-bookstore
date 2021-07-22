@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "bookkart",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbookkart60468fd4",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

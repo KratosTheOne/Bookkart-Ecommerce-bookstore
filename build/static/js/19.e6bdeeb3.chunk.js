@@ -1,0 +1,2 @@
+(this["webpackJsonpbook-store-v2"]=this["webpackJsonpbook-store-v2"]||[]).push([[19],{563:function(t,e,n){"use strict";n.r(e),n.d(e,"amplify_container",(function(){return s}));var o=n(103),s=function(){function t(t){Object(o.g)(this,t)}return t.prototype.render=function(){return Object(o.f)(o.a,null,Object(o.f)("slot",null))},t}();s.style=":host{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;height:100vh}"}}]);
+//# sourceMappingURL=19.e6bdeeb3.chunk.js.map

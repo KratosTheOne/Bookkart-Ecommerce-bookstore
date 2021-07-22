@@ -1,0 +1,30 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bookkart-dev-191806-authRole",
+      "UnauthRoleArn": "arn:aws:iam::121349830038:role/amplify-bookkart-dev-191806-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::121349830038:role/amplify-bookkart-dev-191806-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-bookkart-dev-191806-deployment",
+      "UnauthRoleName": "amplify-bookkart-dev-191806-unauthRole",
+      "StackName": "amplify-bookkart-dev-191806",
+      "StackId": "arn:aws:cloudformation:us-east-2:121349830038:stack/amplify-bookkart-dev-191806/03c36740-b972-11eb-9275-02a60f9ca1ba",
+      "AmplifyAppId": "d3hffm7k3f083p"
+    },
+    "categories": {
+      "auth": {
+        "bookkart60468fd4": {}
+      },
+      "function": {
+        "processPayment": {
+          "deploymentBucketName": "amplify-bookkart-dev-191806-deployment",
+          "s3Key": "amplify-builds/processPayment-33596153564b4e665479-build.zip"
+        },
+        "createOrder": {
+          "deploymentBucketName": "amplify-bookkart-dev-191806-deployment",
+          "s3Key": "amplify-builds/createOrder-63446c37534d73705963-build.zip"
+        }
+      }
+    }
+  }
+}

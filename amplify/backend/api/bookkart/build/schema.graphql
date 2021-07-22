@@ -1,0 +1,310 @@
+type Book @aws_api_key @aws_cognito_user_pools {
+  id: ID!
+  title: String!
+  description: String
+  image: String
+  author: String
+  featured: Boolean
+  price: Float
+  orders(order_id: ModelIDKeyConditionInput, filter: ModelBookOrderFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBookOrderConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type BookOrder {
+  id: ID!
+  book_id: ID!
+  order_id: ID!
+  order: Order
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  book: Book @aws_api_key @aws_cognito_user_pools
+  customer: String
+}
+
+type Order {
+  id: ID!
+  user: String!
+  date: String
+  total: Float
+  books(book_id: ModelIDKeyConditionInput, filter: ModelBookOrderFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBookOrderConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  customer: String
+}
+
+enum OrderStatus {
+  SUCCESS
+  FAILED
+}
+
+input CartItem {
+  id: ID!
+  title: String
+  image: String
+  price: Float
+  amount: Int
+}
+
+input ProcessOrderInput {
+  id: ID!
+  cart: [CartItem]
+  total: Float!
+  token: String!
+  address: String
+}
+
+type Mutation {
+  processOrder(input: ProcessOrderInput!): OrderStatus
+  createBook(input: CreateBookInput!, condition: ModelBookConditionInput): Book
+  updateBook(input: UpdateBookInput!, condition: ModelBookConditionInput): Book
+  deleteBook(input: DeleteBookInput!, condition: ModelBookConditionInput): Book
+  createBookOrder(input: CreateBookOrderInput!, condition: ModelBookOrderConditionInput): BookOrder
+  updateBookOrder(input: UpdateBookOrderInput!, condition: ModelBookOrderConditionInput): BookOrder
+  deleteBookOrder(input: DeleteBookOrderInput!, condition: ModelBookOrderConditionInput): BookOrder
+  createOrder(input: CreateOrderInput!, condition: ModelOrderConditionInput): Order
+  updateOrder(input: UpdateOrderInput!, condition: ModelOrderConditionInput): Order
+  deleteOrder(input: DeleteOrderInput!, condition: ModelOrderConditionInput): Order
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelBookConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Book]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelBookFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  description: ModelStringInput
+  image: ModelStringInput
+  author: ModelStringInput
+  featured: ModelBooleanInput
+  price: ModelFloatInput
+  and: [ModelBookFilterInput]
+  or: [ModelBookFilterInput]
+  not: ModelBookFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getOrder(id: ID!): Order
+  listOrders(filter: ModelOrderFilterInput, limit: Int, nextToken: String): ModelOrderConnection
+  getBook(id: ID!): Book @aws_api_key @aws_cognito_user_pools
+  listBooks(filter: ModelBookFilterInput, limit: Int, nextToken: String): ModelBookConnection @aws_api_key @aws_cognito_user_pools
+}
+
+input CreateBookInput {
+  id: ID
+  title: String!
+  description: String
+  image: String
+  author: String
+  featured: Boolean
+  price: Float
+}
+
+input UpdateBookInput {
+  id: ID!
+  title: String
+  description: String
+  image: String
+  author: String
+  featured: Boolean
+  price: Float
+}
+
+input DeleteBookInput {
+  id: ID!
+}
+
+input ModelBookConditionInput {
+  title: ModelStringInput
+  description: ModelStringInput
+  image: ModelStringInput
+  author: ModelStringInput
+  featured: ModelBooleanInput
+  price: ModelFloatInput
+  and: [ModelBookConditionInput]
+  or: [ModelBookConditionInput]
+  not: ModelBookConditionInput
+}
+
+input CreateBookOrderInput {
+  id: ID
+  book_id: ID!
+  order_id: ID!
+}
+
+input UpdateBookOrderInput {
+  id: ID!
+  book_id: ID
+  order_id: ID
+}
+
+input DeleteBookOrderInput {
+  id: ID!
+}
+
+input ModelBookOrderConditionInput {
+  book_id: ModelIDInput
+  order_id: ModelIDInput
+  and: [ModelBookOrderConditionInput]
+  or: [ModelBookOrderConditionInput]
+  not: ModelBookOrderConditionInput
+}
+
+type ModelOrderConnection {
+  items: [Order]
+  nextToken: String
+}
+
+input ModelOrderFilterInput {
+  id: ModelIDInput
+  user: ModelStringInput
+  date: ModelStringInput
+  total: ModelFloatInput
+  and: [ModelOrderFilterInput]
+  or: [ModelOrderFilterInput]
+  not: ModelOrderFilterInput
+}
+
+input CreateOrderInput {
+  id: ID
+  user: String!
+  date: String
+  total: Float
+}
+
+input UpdateOrderInput {
+  id: ID!
+  user: String
+  date: String
+  total: Float
+}
+
+input DeleteOrderInput {
+  id: ID!
+}
+
+input ModelOrderConditionInput {
+  user: ModelStringInput
+  date: ModelStringInput
+  total: ModelFloatInput
+  and: [ModelOrderConditionInput]
+  or: [ModelOrderConditionInput]
+  not: ModelOrderConditionInput
+}
+
+input ModelIDKeyConditionInput {
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+type ModelBookOrderConnection {
+  items: [BookOrder]
+  nextToken: String
+}
+
+input ModelBookOrderFilterInput {
+  id: ModelIDInput
+  book_id: ModelIDInput
+  order_id: ModelIDInput
+  and: [ModelBookOrderFilterInput]
+  or: [ModelBookOrderFilterInput]
+  not: ModelBookOrderFilterInput
+}

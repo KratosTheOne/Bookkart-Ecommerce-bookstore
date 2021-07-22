@@ -1,0 +1,14 @@
+{
+    "CreateAPIKey": 1,
+    "AppSyncApiName": "bookkart",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authbookkart60468fd4",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-bookkart-dev-191806-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/e969be1eecf14899d98065256d953ae192674cd8"
+}
